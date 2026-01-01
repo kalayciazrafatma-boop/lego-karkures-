@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tam Lego Kar Küresi</title>
+    <!-- Lego tarzı kalın font -->
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .globe-container {
+            position: relative;
+            width: 320px;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- CAM KÜRE --- */
+        .globe {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(20, 50, 90, 0.7) 0%, rgba(135,206,235,0.1) 100%);
+            border: 8px solid #f0f0f0;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.1), 
+                inset 0 0 40px rgba(0,0,0,0.3),
+                inset 10px 10px 30px rgba(255,255,255,0.2);
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* --- LEGO ÇİÇEK YAPISI (GENEL) --- */
+        .lego-scene {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            z-index: 1;
+        }
+
+        /* Ortak Lego Parçası Stili */
+        .lego-brick {
+            position: absolute;
+            box-shadow: inset -2px -2px 0 rgba(0,0,0,0.2); /* Plastik hissi */
+        }
+        /* Lego Çıkıntısı (Stud) */
+        .lego-brick::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: inherit;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-bottom: none;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* --- ARKA BUKET (Laleler) --- */
+        /* Saplar */
+        .stem {
+            width: 8px;
+            height: 60px;
+            background-color: #4CAF50;
+            bottom: 20px;
+            border: 1px solid #2E7D32;
+        }
+        .stem-1 { left: 80px; height: 90px; transform: rotate(-10deg); }
+        .stem-2 { left: 100px; height: 110px; } /* Orta uzun */
+        .stem-3 { left: 120px; height: 80px; transform: rotate(10deg); }
+
+        /* Çiçek Başları (Blok Blok) */
+        .flower-head {
+            width: 24px;
+            height: 20px;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+        /* Sarı Çiçek */
+        .f-yellow { background: #FFEB3B; bottom: 105px; left: 70px; }
+        /* Pembe Çiçek */
+        .f-pink { background: #E91E63; bottom: 130px; left: 92px; width: 28px; height: 24px;}
+        /* Turuncu Çiçek */
+        .f-orange { background: #FF9800; bottom: 95px; left: 125px; }
+
+        /* --- ÖN KOKİNA (Holly) --- */
+        .kokina-group {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        /* Yeşil Yaprak Blokları */
+        .leaf-brick {
+            width: 30px;
+            height: 12px;
+            background-color: #1B5E20; /* Koyu yeşil */
+            border: 1px solid #004d40;
+            bottom: 0;
+        }
+        .l-left { left: -35px; transform: rotate(-25deg); bottom: 5px; }
+        .l-right { left: 5px; transform: rotate(25deg); bottom: 5px; }
+        .l-center { left: -15px; bottom: -5px; width: 30px; }
+
+        /* Kırmızı Meyve Blokları (Kare) */
+        .berry-brick {
+            width: 14px;
+            height: 14px;
+            background-color: #D32F2F;
+            border: 1px solid #B71C1C;
+        }
+        .berry-brick::after { /* Yuvarlak stud */
+            border-radius: 50%;
+            width: 8px;
+            height: 4px;
+        }
+
+        .bb-1 { bottom: 15px; left: -15px; }
+        .bb-2 { bottom: 20px; left: -5px; }
+        .bb-3 { bottom: 10px; left: 0px; }
+
+
+        /* --- LEGO KAİDE --- */
+        .lego-base {
+            margin-top: -25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+            position: relative;
+        }
+
+        .brick-layer {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+        }
+
+        .brick {
+            width: 60px;
+            height: 35px;
+            position: relative;
+            box-shadow: inset 0 -5px 0 rgba(0,0,0,0.15);
+        }
+
+        .red-brick { background-color: #d32f2f; border: 2px solid #b71c1c; }
+        .yellow-brick { background-color: #fdd835; border: 2px solid #f9a825; }
+        
+        .brick::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 6px;
+            background-color: inherit;
+            border: 1px solid rgba(0,0,0,0.2);
+            border-bottom: none;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* --- İSİM PLAKASI & YAZI --- */
+        .plaque-container {
+            background-color: #111;
+            border: 2px solid #444;
+            padding: 8px 20px;
+            position: absolute;
+            bottom: 15px; 
+            z-index: 20;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+            text-align: center;
+            min-width: 170px;
+        }
+
+        /* Lego Tarzı Yazı */
+        .surprise-text {
+            font-family: 'Titan One', cursive; /* Lego fontuna benzer */
+            color: #FFD700; /* Sarı iç */
+            font-size: 24px;
+            margin: 0;
+            /* Lego logosu gibi dış kenarlık efekti */
+            text-shadow: 
+                2px 2px 0px #B71C1C, 
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+            letter-spacing: 1px;
+        }
+
+        .sub-text {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 10px;
+            color: #bbb;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        /* Canvas (Kar için) */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 6; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="globe-container">
+        
+        <!-- Kar Küresi -->
+        <div class="globe">
+            <canvas id="snowCanvas"></canvas>
+            
+            <!-- Lego Çiçek Sahnesi -->
+            <div class="lego-scene">
+                <!-- Arka Buket Sapları -->
+                <div class="lego-brick stem stem-1"></div>
+                <div class="lego-brick stem stem-2"></div>
+                <div class="lego-brick stem stem-3"></div>
+
+                <!-- Arka Buket Çiçek Başları -->
+                <div class="lego-brick flower-head f-yellow"></div>
+                <div class="lego-brick flower-head f-pink"></div>
+                <div class="lego-brick flower-head f-orange"></div>
+
+                <!-- Ön Kokina Grubu -->
+                <div class="kokina-group">
+                    <!-- Yapraklar (Yeşil Bloklar) -->
+                    <div class="lego-brick leaf-brick l-left"></div>
+                    <div class="lego-brick leaf-brick l-right"></div>
+                    <div class="lego-brick leaf-brick l-center"></div>
+
+                    <!-- Meyveler (Kırmızı Küçük Bloklar) -->
+                    <div class="lego-brick berry-brick bb-1"></div>
+                    <div class="lego-brick berry-brick bb-2"></div>
+                    <div class="lego-brick berry-brick bb-3"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Lego Kaide -->
+        <div class="lego-base">
+            <div class="brick-layer">
+                <div class="brick red-brick" style="width: 220px;"></div>
+            </div>
+            <div class="brick-layer" style="margin-top:2px;">
+                <div class="brick yellow-brick"></div>
+                <div class="brick yellow-brick"></div>
+                <div class="brick yellow-brick"></div>
+                <div class="brick yellow-brick"></div>
+            </div>
+             <div class="brick-layer" style="margin-top:2px;">
+                <div class="brick red-brick" style="width: 260px;"></div>
+            </div>
+
+            <!-- Etiket -->
+            <div class="plaque-container">
+                <p class="surprise-text">Mutlu Yıllar!</p>
+                <div class="sub-text">Brick Collection</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 280;
+        canvas.height = 280;
+
+        const snowflakes = [];
+        const flakeCount = 180;
+
+        class Snowflake {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedY = Math.random() * 0.8 + 0.3;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.opacity = Math.random() * 0.6 + 0.2;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y > canvas.height) {
+                    this.y = -5;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x > canvas.width) {
+                    this.x = 0;
+                } else if (this.x < 0) {
+                    this.x = canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < flakeCount; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < snowflakes.length; i++) {
+                snowflakes[i].update();
+                snowflakes[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
