@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kodla Çizilen Çiçekler - Mutlu Yıllar</title>
+    <title>Kodla Çizilen Çiçekler - Sorunsuz</title>
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <style>
         body {
@@ -54,14 +54,14 @@
             z-index: 2;
         }
 
-        /* --- ÇİÇEK GRUBU (Tümü Kodla Çizim) --- */
+        /* --- ÇİÇEK SAHNESİ (TÜMÜ KOD) --- */
         .flower-scene {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
-            height: 220px;
+            width: 180px;
+            height: 200px;
             z-index: 5;
             animation: breathe 4s infinite ease-in-out;
         }
@@ -71,100 +71,109 @@
             50% { transform: translateX(-50%) scale(1.02); }
         }
 
-        /* --- 1. KATMAN: ARKA BUKET (CSS) --- */
-        .bouquet-wrapper {
+        /* --- 1. ARKA BUKET (CSS İLE ÇİZİM) --- */
+        .bouquet-back {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
+            width: 140px;
             height: 140px;
             z-index: 1; /* Arkada */
+            opacity: 0.9;
         }
 
-        /* Buket Kağıdı (Üçgenimsi) */
-        .paper-wrap {
+        /* Buket Kağıdı (Pembe Üçgen) */
+        .paper {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 0; 
             height: 0; 
-            border-left: 40px solid transparent;
-            border-right: 40px solid transparent;
-            border-top: 100px solid #f8bbd0; /* Pembe kağıt */
-            border-radius: 5px;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-top: 120px solid #f48fb1; /* Pembe */
             filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
         }
 
         /* Güller (CSS Daireleri) */
         .rose {
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
         }
-        /* Gül İçindeki Sarmal Efekt (Basitçe) */
-        .rose::after {
-            content: '';
-            position: absolute;
-            top: 5px; left: 5px;
-            width: 20px; height: 20px;
-            border-radius: 50%;
-            border-top: 3px solid rgba(255,255,255,0.3);
-            border-left: 3px solid rgba(255,255,255,0.3);
+        .rose::after { /* Gülün içindeki kıvrım */
+            content: ''; position: absolute; top: 8px; left: 8px; width: 20px; height: 20px;
+            border-radius: 50%; border-top: 3px solid rgba(255,255,255,0.4); border-left: 3px solid rgba(255,255,255,0.4);
             transform: rotate(45deg);
         }
 
-        .rose-1 { background: #e91e63; bottom: 90px; left: 10px; z-index: 2; } /* Pembe */
-        .rose-2 { background: #ffeb3b; bottom: 100px; left: 45px; z-index: 3; } /* Sarı */
-        .rose-3 { background: #ff9800; bottom: 85px; left: 75px; z-index: 2; } /* Turuncu */
-        .rose-4 { background: #f06292; bottom: 65px; left: 30px; z-index: 4; } /* Açık Pembe */
-        .rose-5 { background: #fff; bottom: 65px; left: 60px; z-index: 4; } /* Beyaz */
+        .r1 { background: #e91e63; top: 10px; left: 10px; } /* Koyu Pembe */
+        .r2 { background: #ffeb3b; top: 20px; left: 50px; } /* Sarı */
+        .r3 { background: #ff9800; top: 50px; left: 20px; } /* Turuncu */
+        .r4 { background: #f06292; top: 50px; left: 70px; } /* Açık Pembe */
+        .r5 { background: #fff; top: -10px; left: 40px; z-index: -1; } /* Beyaz (Tepede) */
 
 
-        /* --- 2. KATMAN: KOKİNA (En Önde ve CSS ile Çizim) --- */
-        .kokina-wrapper {
+        /* --- 2. ÖN KOKİNA (CSS İLE ÇİZİM) --- */
+        .kokina-front {
             position: absolute;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 120px;
             height: 80px;
-            z-index: 10; /* En önde */
-            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.5));
+            z-index: 10; /* En Önde */
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
         }
 
-        /* Kokina Yaprakları (Sivri Uçlu) */
-        .k-leaf {
+        /* Kokina Yaprağı (Sivri Yeşil Şekil) */
+        .leaf {
             position: absolute;
-            width: 45px;
-            height: 25px;
+            width: 50px;
+            height: 30px;
             background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            border-radius: 80% 0 80% 0; /* Yaprak şekli */
+            border-radius: 90% 0 90% 0; /* Sivri yaprak şekli */
         }
+        .l1 { bottom: 10px; left: 10px; transform: rotate(-30deg); }
+        .l2 { bottom: 10px; right: 10px; transform: rotate(10deg) scaleX(-1); }
+        .l3 { bottom: 25px; left: 35px; transform: rotate(-90deg) scale(0.8); }
 
-        .kl-1 { bottom: 10px; left: 15px; transform: rotate(-20deg); }
-        .kl-2 { bottom: 10px; right: 15px; transform: rotate(20deg) scaleX(-1); }
-        .kl-3 { bottom: 25px; left: 38px; transform: rotate(-90deg) scale(0.8); z-index: -1; }
-
-        /* Kokina Meyveleri (Kırmızı Parlak Toplar) */
-        .k-berry {
+        /* Kokina Meyvesi (Kırmızı Top) */
+        .berry {
             position: absolute;
-            width: 16px;
-            height: 16px;
-            background: radial-gradient(circle at 30% 30%, #ff5252, #b71c1c); /* Parlama efekti */
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 30% 30%, #ff5252, #b71c1c);
             border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             z-index: 2;
         }
+        .b1 { bottom: 25px; left: 45px; }
+        .b2 { bottom: 35px; left: 55px; }
+        .b3 { bottom: 15px; left: 58px; }
+        .b4 { bottom: 30px; left: 35px; transform: scale(0.8); } /* Küçük */
 
-        .kb-1 { bottom: 20px; left: 45px; }
-        .kb-2 { bottom: 28px; left: 55px; }
-        .kb-3 { bottom: 15px; left: 58px; }
-        .kb-4 { bottom: 25px; left: 38px; width: 14px; height: 14px; } /* Küçük */
-        .kb-5 { bottom: 10px; left: 48px; width: 14px; height: 14px; } /* Küçük */
+        /* --- KURDELE (CSS) --- */
+        .ribbon-css {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background: #d32f2f;
+            border-radius: 5px;
+            z-index: 11;
+        }
+        .ribbon-css::before, .ribbon-css::after { /* Kurdele uçları */
+            content: ''; position: absolute; top: 5px; width: 0; height: 0;
+            border-top: 15px solid #b71c1c; border-left: 15px solid transparent; border-right: 15px solid transparent;
+        }
+        .ribbon-css::before { left: -10px; transform: rotate(45deg); }
+        .ribbon-css::after { right: -10px; transform: rotate(-45deg); }
 
 
         /* --- LEGO KAİDE --- */
@@ -234,35 +243,34 @@
         <div class="globe">
             <canvas id="snowCanvas"></canvas>
             
-            <!-- KODLA ÇİZİLEN ÇİÇEK SAHNESİ -->
+            <!-- TAMAMEN KODLA ÇİZİLMİŞ SAHNE -->
             <div class="flower-scene">
                 
-                <!-- 1. Katman: Arka Buket -->
-                <div class="bouquet-wrapper">
-                    <!-- Pembe Kağıt -->
-                    <div class="paper-wrap"></div>
-                    <!-- Çiçekler -->
-                    <div class="rose rose-1"></div>
-                    <div class="rose rose-2"></div>
-                    <div class="rose rose-3"></div>
-                    <div class="rose rose-4"></div>
-                    <div class="rose rose-5"></div>
+                <!-- 1. Arka Buket (Kodla) -->
+                <div class="bouquet-back">
+                    <div class="paper"></div> <!-- Pembe Kağıt -->
+                    <div class="rose r5"></div> <!-- Beyaz Gül -->
+                    <div class="rose r1"></div> <!-- Pembe Gül -->
+                    <div class="rose r2"></div> <!-- Sarı Gül -->
+                    <div class="rose r3"></div> <!-- Turuncu Gül -->
+                    <div class="rose r4"></div> <!-- Açık Pembe Gül -->
                 </div>
 
-                <!-- 2. Katman: Ön Kokina (Yıldız Parça) -->
-                <div class="kokina-wrapper">
+                <!-- 2. Ön Kokina (Kodla) -->
+                <div class="kokina-front">
                     <!-- Yapraklar -->
-                    <div class="k-leaf kl-1"></div>
-                    <div class="k-leaf kl-2"></div>
-                    <div class="k-leaf kl-3"></div>
-                    
-                    <!-- Kırmızı Meyveler -->
-                    <div class="k-berry kb-1"></div>
-                    <div class="k-berry kb-2"></div>
-                    <div class="k-berry kb-3"></div>
-                    <div class="k-berry kb-4"></div>
-                    <div class="k-berry kb-5"></div>
+                    <div class="leaf l1"></div>
+                    <div class="leaf l2"></div>
+                    <div class="leaf l3"></div>
+                    <!-- Meyveler -->
+                    <div class="berry b1"></div>
+                    <div class="berry b2"></div>
+                    <div class="berry b3"></div>
+                    <div class="berry b4"></div>
                 </div>
+
+                <!-- 3. Kurdele (Kodla) -->
+                <div class="ribbon-css"></div>
 
             </div>
         </div>
@@ -283,7 +291,7 @@
     </div>
 
     <script>
-        /* --- KAR --- */
+        /* --- KAR EFEKTİ --- */
         const snowCanvas = document.getElementById('snowCanvas');
         const sCtx = snowCanvas.getContext('2d');
         snowCanvas.width = 280;
