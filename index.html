@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kodla Çizilen Çiçekler - Sorunsuz</title>
+    <title>Gerçekçi SVG Çiçekler - Mutlu Yıllar</title>
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <style>
         body {
@@ -18,7 +18,7 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* --- HAVAİ FİŞEK CANVAS --- */
+        /* --- HAVAİ FİŞEK --- */
         #fireworkCanvas {
             position: absolute;
             top: 0;
@@ -54,127 +54,30 @@
             z-index: 2;
         }
 
-        /* --- ÇİÇEK SAHNESİ (TÜMÜ KOD) --- */
-        .flower-scene {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 200px;
-            z-index: 5;
-            animation: breathe 4s infinite ease-in-out;
-        }
-
-        @keyframes breathe {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.02); }
-        }
-
-        /* --- 1. ARKA BUKET (CSS İLE ÇİZİM) --- */
-        .bouquet-back {
+        /* --- SVG SAHNESİ --- */
+        .svg-scene {
             position: absolute;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 140px;
-            height: 140px;
-            z-index: 1; /* Arkada */
-            opacity: 0.9;
+            width: 200px;
+            height: 220px;
+            z-index: 5;
+            /* Hafifçe süzülme animasyonu */
+            animation: float 4s ease-in-out infinite;
         }
 
-        /* Buket Kağıdı (Pembe Üçgen) */
-        .paper {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; 
-            height: 0; 
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-top: 120px solid #f48fb1; /* Pembe */
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
         }
 
-        /* Güller (CSS Daireleri) */
-        .rose {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+        /* Çiçekler ve Kokina SVG Konumları */
+        .bouquet-svg {
+            width: 180px;
+            height: auto;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
         }
-        .rose::after { /* Gülün içindeki kıvrım */
-            content: ''; position: absolute; top: 8px; left: 8px; width: 20px; height: 20px;
-            border-radius: 50%; border-top: 3px solid rgba(255,255,255,0.4); border-left: 3px solid rgba(255,255,255,0.4);
-            transform: rotate(45deg);
-        }
-
-        .r1 { background: #e91e63; top: 10px; left: 10px; } /* Koyu Pembe */
-        .r2 { background: #ffeb3b; top: 20px; left: 50px; } /* Sarı */
-        .r3 { background: #ff9800; top: 50px; left: 20px; } /* Turuncu */
-        .r4 { background: #f06292; top: 50px; left: 70px; } /* Açık Pembe */
-        .r5 { background: #fff; top: -10px; left: 40px; z-index: -1; } /* Beyaz (Tepede) */
-
-
-        /* --- 2. ÖN KOKİNA (CSS İLE ÇİZİM) --- */
-        .kokina-front {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 80px;
-            z-index: 10; /* En Önde */
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
-        }
-
-        /* Kokina Yaprağı (Sivri Yeşil Şekil) */
-        .leaf {
-            position: absolute;
-            width: 50px;
-            height: 30px;
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            border-radius: 90% 0 90% 0; /* Sivri yaprak şekli */
-        }
-        .l1 { bottom: 10px; left: 10px; transform: rotate(-30deg); }
-        .l2 { bottom: 10px; right: 10px; transform: rotate(10deg) scaleX(-1); }
-        .l3 { bottom: 25px; left: 35px; transform: rotate(-90deg) scale(0.8); }
-
-        /* Kokina Meyvesi (Kırmızı Top) */
-        .berry {
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            background: radial-gradient(circle at 30% 30%, #ff5252, #b71c1c);
-            border-radius: 50%;
-            z-index: 2;
-        }
-        .b1 { bottom: 25px; left: 45px; }
-        .b2 { bottom: 35px; left: 55px; }
-        .b3 { bottom: 15px; left: 58px; }
-        .b4 { bottom: 30px; left: 35px; transform: scale(0.8); } /* Küçük */
-
-        /* --- KURDELE (CSS) --- */
-        .ribbon-css {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 20px;
-            background: #d32f2f;
-            border-radius: 5px;
-            z-index: 11;
-        }
-        .ribbon-css::before, .ribbon-css::after { /* Kurdele uçları */
-            content: ''; position: absolute; top: 5px; width: 0; height: 0;
-            border-top: 15px solid #b71c1c; border-left: 15px solid transparent; border-right: 15px solid transparent;
-        }
-        .ribbon-css::before { left: -10px; transform: rotate(45deg); }
-        .ribbon-css::after { right: -10px; transform: rotate(-45deg); }
-
 
         /* --- LEGO KAİDE --- */
         .lego-base {
@@ -243,35 +146,62 @@
         <div class="globe">
             <canvas id="snowCanvas"></canvas>
             
-            <!-- TAMAMEN KODLA ÇİZİLMİŞ SAHNE -->
-            <div class="flower-scene">
-                
-                <!-- 1. Arka Buket (Kodla) -->
-                <div class="bouquet-back">
-                    <div class="paper"></div> <!-- Pembe Kağıt -->
-                    <div class="rose r5"></div> <!-- Beyaz Gül -->
-                    <div class="rose r1"></div> <!-- Pembe Gül -->
-                    <div class="rose r2"></div> <!-- Sarı Gül -->
-                    <div class="rose r3"></div> <!-- Turuncu Gül -->
-                    <div class="rose r4"></div> <!-- Açık Pembe Gül -->
-                </div>
+            <div class="svg-scene">
+                <!-- SVG KODU BAŞLANGICI: Bu kısım resmi kodla çizer -->
+                <svg class="bouquet-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    
+                    <!-- 1. ARKA BUKET (Kağıt ve Güller) -->
+                    <g transform="translate(40, 40)">
+                        <!-- Pembe Kağıt -->
+                        <path d="M60 150 L10 50 L110 50 Z" fill="#f8bbd0" stroke="#f48fb1" stroke-width="2"/>
+                        
+                        <!-- Güller (Detaylı çizim) -->
+                        <g transform="translate(20, 20)">
+                            <circle cx="20" cy="20" r="18" fill="#e91e63"/>
+                            <path d="M20 10 Q35 10 30 25 Q20 40 10 25 Q5 10 20 10" fill="none" stroke="#fce4ec" stroke-width="2" opacity="0.6"/>
+                            <path d="M20 15 Q28 15 25 22 Q20 30 15 22 Q12 15 20 15" fill="none" stroke="#fce4ec" stroke-width="2" opacity="0.6"/>
+                        </g>
+                        <g transform="translate(50, 10)">
+                            <circle cx="20" cy="20" r="18" fill="#ffeb3b"/>
+                            <path d="M20 10 Q35 10 30 25 Q20 40 10 25 Q5 10 20 10" fill="none" stroke="#fff9c4" stroke-width="2" opacity="0.6"/>
+                        </g>
+                        <g transform="translate(80, 25)">
+                            <circle cx="20" cy="20" r="18" fill="#ff9800"/>
+                            <path d="M20 10 Q35 10 30 25 Q20 40 10 25 Q5 10 20 10" fill="none" stroke="#ffe0b2" stroke-width="2" opacity="0.6"/>
+                        </g>
+                        <g transform="translate(35, 50)">
+                            <circle cx="20" cy="20" r="18" fill="#f06292"/>
+                            <path d="M20 10 Q35 10 30 25 Q20 40 10 25 Q5 10 20 10" fill="none" stroke="#fce4ec" stroke-width="2" opacity="0.6"/>
+                        </g>
+                    </g>
 
-                <!-- 2. Ön Kokina (Kodla) -->
-                <div class="kokina-front">
-                    <!-- Yapraklar -->
-                    <div class="leaf l1"></div>
-                    <div class="leaf l2"></div>
-                    <div class="leaf l3"></div>
-                    <!-- Meyveler -->
-                    <div class="berry b1"></div>
-                    <div class="berry b2"></div>
-                    <div class="berry b3"></div>
-                    <div class="berry b4"></div>
-                </div>
+                    <!-- 2. ÖN KOKİNA (Sivri Yapraklar ve Meyveler) -->
+                    <g transform="translate(60, 120)">
+                        <!-- Yapraklar (Daha doğal şekilli) -->
+                        <path d="M10 20 Q0 10 10 0 Q20 10 10 20 Z" fill="#2e7d32" transform="scale(1.5) rotate(-30)"/>
+                        <path d="M50 20 Q40 10 50 0 Q60 10 50 20 Z" fill="#2e7d32" transform="scale(1.5) rotate(30) translate(10, -20)"/>
+                        <path d="M30 40 Q20 30 30 20 Q40 30 30 40 Z" fill="#1b5e20" transform="scale(1.5) rotate(0) translate(0, -5)"/>
+                        
+                        <!-- Kırmızı Parlak Meyveler -->
+                        <circle cx="30" cy="15" r="8" fill="#d32f2f"/>
+                        <circle cx="33" cy="12" r="2" fill="white" opacity="0.4"/> <!-- Parlama -->
+                        
+                        <circle cx="45" cy="25" r="8" fill="#c62828"/>
+                        <circle cx="48" cy="22" r="2" fill="white" opacity="0.4"/>
+                        
+                        <circle cx="20" cy="28" r="7" fill="#b71c1c"/>
+                        <circle cx="23" cy="25" r="2" fill="white" opacity="0.4"/>
+                    </g>
 
-                <!-- 3. Kurdele (Kodla) -->
-                <div class="ribbon-css"></div>
+                    <!-- 3. KURDELE -->
+                    <g transform="translate(70, 160)">
+                        <path d="M0 0 Q30 10 60 0 L60 20 Q30 30 0 20 Z" fill="#d32f2f"/>
+                        <path d="M10 5 L-5 20 L10 20 Z" fill="#b71c1c"/>
+                        <path d="M50 5 L65 20 L50 20 Z" fill="#b71c1c"/>
+                    </g>
 
+                </svg>
+                <!-- SVG KODU BİTİŞİ -->
             </div>
         </div>
 
