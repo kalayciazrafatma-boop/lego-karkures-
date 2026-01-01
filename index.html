@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutlu Yıllar - Lego Kar Küresi</title>
-    <!-- Lego tarzı kalın font -->
+    <title>Kokina Buketi - Mutlu Yıllar</title>
     <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
     <style>
         body {
@@ -19,17 +18,16 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* --- HAVAİ FİŞEK CANVAS (ARKAPLAN) --- */
+        /* --- HAVAİ FİŞEK --- */
         #fireworkCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* En arkada */
+            z-index: 1;
         }
 
-        /* --- KAR KÜRESİ KAPLAYICI --- */
         .globe-container {
             position: relative;
             width: 320px;
@@ -37,14 +35,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 10; /* Havai fişeklerin önünde dursun */
+            z-index: 10;
         }
 
         /* --- CAM KÜRE --- */
         .globe {
             width: 280px;
             height: 280px;
-            background: radial-gradient(circle, rgba(20, 50, 90, 0.6) 0%, rgba(135,206,235,0.1) 100%);
+            background: radial-gradient(circle, rgba(20, 50, 90, 0.5) 0%, rgba(135,206,235,0.1) 100%);
             border: 8px solid #f0f0f0;
             border-radius: 50%;
             position: relative;
@@ -56,60 +54,55 @@
             z-index: 2;
         }
 
-        /* --- LEGO SAHNESİ --- */
-        .lego-scene {
+        /* --- BUKET GRUBU --- */
+        .bouquet-group {
             position: absolute;
-            bottom: 20px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
-            height: 200px;
-            z-index: 1;
+            width: 240px;
+            height: 220px;
+            z-index: 5;
+            animation: sway 6s infinite ease-in-out; /* Hafif sallanma efekti */
         }
 
-        /* Ortak Lego Parçası Stili */
-        .lego-brick {
-            position: absolute;
-            box-shadow: inset -2px -2px 0 rgba(0,0,0,0.2);
+        @keyframes sway {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(1deg); }
         }
-        .lego-brick::after {
-            content: '';
+
+        /* 1. Arka Buket (Dolgu Çiçekler) */
+        .flower-back {
             position: absolute;
-            top: -4px;
+            width: 190px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 4px;
-            background: inherit;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-bottom: none;
-            border-radius: 2px 2px 0 0;
+            z-index: 1; /* Arkada */
+            opacity: 0.85;
+            filter: blur(0.5px) contrast(1.1); /* Hafif flu yaparak arkada olduğunu hissettir */
         }
 
-        /* Çiçek Sapları */
-        .stem { width: 8px; height: 60px; background-color: #4CAF50; bottom: 20px; border: 1px solid #2E7D32; }
-        .stem-1 { left: 80px; height: 90px; transform: rotate(-10deg); }
-        .stem-2 { left: 100px; height: 110px; }
-        .stem-3 { left: 120px; height: 80px; transform: rotate(10deg); }
+        /* 2. Ana Kokina (En Önde) */
+        .kokina-front {
+            position: absolute;
+            width: 160px; /* Büyük ve belirgin */
+            bottom: 20px; /* Aşağıda, önde */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; /* En önde */
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+        }
 
-        /* Çiçek Başları */
-        .flower-head { width: 24px; height: 20px; border: 1px solid rgba(0,0,0,0.2); }
-        .f-yellow { background: #FFEB3B; bottom: 105px; left: 70px; }
-        .f-pink { background: #E91E63; bottom: 130px; left: 92px; width: 28px; height: 24px;}
-        .f-orange { background: #FF9800; bottom: 95px; left: 125px; }
-
-        /* Kokina Detayları */
-        .kokina-group { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 2; }
-        .leaf-brick { width: 30px; height: 12px; background-color: #1B5E20; border: 1px solid #004d40; bottom: 0; }
-        .l-left { left: -35px; transform: rotate(-25deg); bottom: 5px; }
-        .l-right { left: 5px; transform: rotate(25deg); bottom: 5px; }
-        .l-center { left: -15px; bottom: -5px; width: 30px; }
-        .berry-brick { width: 14px; height: 14px; background-color: #D32F2F; border: 1px solid #B71C1C; }
-        .berry-brick::after { border-radius: 50%; width: 8px; height: 4px; }
-        .bb-1 { bottom: 15px; left: -15px; }
-        .bb-2 { bottom: 20px; left: -5px; }
-        .bb-3 { bottom: 10px; left: 0px; }
-
+        /* 3. Kurdele (Bağlantı) */
+        .ribbon {
+            position: absolute;
+            width: 80px;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 11;
+        }
 
         /* --- LEGO KAİDE --- */
         .lego-base {
@@ -126,7 +119,6 @@
         .yellow-brick { background-color: #fdd835; border: 2px solid #f9a825; }
         .brick::before { content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 25px; height: 6px; background-color: inherit; border: 1px solid rgba(0,0,0,0.2); border-bottom: none; border-radius: 2px 2px 0 0; }
 
-        /* --- İSİM PLAKASI --- */
         .plaque-container {
             background-color: #111;
             border: 2px solid #444;
@@ -143,9 +135,9 @@
         .surprise-text {
             font-family: 'Titan One', cursive;
             color: #FFD700;
-            font-size: 26px; /* Yazıyı biraz büyüttüm */
+            font-size: 26px;
             margin: 0;
-            text-shadow: 2px 2px 0px #B71C1C, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            text-shadow: 2px 2px 0px #B71C1C, -1px -1px 0 #000, 1px -1px 0 #000;
             letter-spacing: 1px;
         }
 
@@ -159,7 +151,6 @@
             font-weight: 600;
         }
 
-        /* Kar Canvas */
         #snowCanvas {
             position: absolute;
             top: 0;
@@ -167,42 +158,32 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 6; 
+            z-index: 6; /* Kar en önde */
         }
     </style>
 </head>
 <body>
 
-    <!-- Havai Fişekler İçin Arkaplan Canvas -->
     <canvas id="fireworkCanvas"></canvas>
 
     <div class="globe-container">
-        <!-- Kar Küresi -->
+        
         <div class="globe">
             <canvas id="snowCanvas"></canvas>
             
-            <div class="lego-scene">
-                <!-- Arka Çiçekler -->
-                <div class="lego-brick stem stem-1"></div>
-                <div class="lego-brick stem stem-2"></div>
-                <div class="lego-brick stem stem-3"></div>
-                <div class="lego-brick flower-head f-yellow"></div>
-                <div class="lego-brick flower-head f-pink"></div>
-                <div class="lego-brick flower-head f-orange"></div>
-
-                <!-- Ön Kokinalar -->
-                <div class="kokina-group">
-                    <div class="lego-brick leaf-brick l-left"></div>
-                    <div class="lego-brick leaf-brick l-right"></div>
-                    <div class="lego-brick leaf-brick l-center"></div>
-                    <div class="lego-brick berry-brick bb-1"></div>
-                    <div class="lego-brick berry-brick bb-2"></div>
-                    <div class="lego-brick berry-brick bb-3"></div>
-                </div>
+            <!-- BUKET GRUBU -->
+            <div class="bouquet-group">
+                <!-- Arkadaki Dolgu Çiçekler (Güller/Karışık) -->
+                <img src="https://freepngimg.com/thumb/rose/17-red-roses-png-image.png" class="flower-back" alt="Arka Buket">
+                
+                <!-- Öndeki Yıldız: Kokina -->
+                <img src="https://freepngimg.com/thumb/holly/3-2-holly-transparent.png" class="kokina-front" alt="Kokina">
+                
+                <!-- Süsleme Kurdelesi -->
+                <img src="https://freepngimg.com/thumb/ribbon/4-red-ribbon-png-image.png" class="ribbon" alt="Kurdele">
             </div>
         </div>
 
-        <!-- Kaide -->
         <div class="lego-base">
             <div class="brick-layer"><div class="brick red-brick" style="width: 220px;"></div></div>
             <div class="brick-layer" style="margin-top:2px;">
@@ -215,16 +196,16 @@
                 <div class="sub-text">Brick Collection</div>
             </div>
         </div>
+
     </div>
 
     <script>
-        /* --- KAR EFEKTİ --- */
+        /* --- KAR --- */
         const snowCanvas = document.getElementById('snowCanvas');
         const sCtx = snowCanvas.getContext('2d');
         snowCanvas.width = 280;
         snowCanvas.height = 280;
         const snowflakes = [];
-
         class Snowflake {
             constructor() {
                 this.x = Math.random() * snowCanvas.width;
@@ -235,21 +216,16 @@
                 this.opacity = Math.random() * 0.6 + 0.2;
             }
             update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
+                this.y += this.speedY; this.x += this.speedX;
                 if (this.y > snowCanvas.height) { this.y = -5; this.x = Math.random() * snowCanvas.width; }
-                if (this.x > snowCanvas.width) this.x = 0;
-                else if (this.x < 0) this.x = snowCanvas.width;
+                if (this.x > snowCanvas.width) this.x = 0; else if (this.x < 0) this.x = snowCanvas.width;
             }
             draw() {
                 sCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                sCtx.beginPath();
-                sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                sCtx.fill();
+                sCtx.beginPath(); sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); sCtx.fill();
             }
         }
         for (let i = 0; i < 180; i++) snowflakes.push(new Snowflake());
-
         function animateSnow() {
             sCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
             snowflakes.forEach(f => { f.update(); f.draw(); });
@@ -257,108 +233,45 @@
         }
         animateSnow();
 
-        /* --- HAVAİ FİŞEK EFEKTİ --- */
+        /* --- HAVAİ FİŞEK --- */
         const fwCanvas = document.getElementById('fireworkCanvas');
         const fCtx = fwCanvas.getContext('2d');
         fwCanvas.width = window.innerWidth;
         fwCanvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            fwCanvas.width = window.innerWidth;
-            fwCanvas.height = window.innerHeight;
-        });
-
+        window.addEventListener('resize', () => { fwCanvas.width = window.innerWidth; fwCanvas.height = window.innerHeight; });
         class Firework {
             constructor() {
-                this.x = Math.random() * fwCanvas.width;
-                this.y = fwCanvas.height;
-                this.targetY = Math.random() * (fwCanvas.height * 0.5); // Ekranın üst yarısında patlasın
-                this.speed = 6 + Math.random() * 4;
-                this.angle = -Math.PI / 2 + (Math.random() * 0.2 - 0.1);
-                this.vx = Math.cos(this.angle) * this.speed;
-                this.vy = Math.sin(this.angle) * this.speed;
-                this.hue = Math.random() * 360;
-                this.exploded = false;
+                this.x = Math.random() * fwCanvas.width; this.y = fwCanvas.height; this.targetY = Math.random() * (fwCanvas.height * 0.5);
+                this.speed = 6 + Math.random() * 4; this.angle = -Math.PI / 2 + (Math.random() * 0.2 - 0.1);
+                this.vx = Math.cos(this.angle) * this.speed; this.vy = Math.sin(this.angle) * this.speed;
+                this.hue = Math.random() * 360; this.exploded = false;
             }
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.y <= this.targetY || this.vy >= 0) {
-                    this.exploded = true;
-                    createParticles(this.x, this.y, this.hue);
-                }
+                this.x += this.vx; this.y += this.vy;
+                if (this.y <= this.targetY || this.vy >= 0) { this.exploded = true; createParticles(this.x, this.y, this.hue); }
             }
-            draw() {
-                fCtx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
-                // Lego tarzı kare roket
-                fCtx.fillRect(this.x, this.y, 4, 4);
-            }
+            draw() { fCtx.fillStyle = `hsl(${this.hue}, 100%, 50%)`; fCtx.fillRect(this.x, this.y, 4, 4); }
         }
-
         class Particle {
             constructor(x, y, hue) {
-                this.x = x;
-                this.y = y;
-                this.hue = hue;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 4 + 1;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.friction = 0.95;
-                this.gravity = 0.05;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.01;
+                this.x = x; this.y = y; this.hue = hue;
+                const angle = Math.random() * Math.PI * 2; const speed = Math.random() * 4 + 1;
+                this.vx = Math.cos(angle) * speed; this.vy = Math.sin(angle) * speed;
+                this.alpha = 1; this.decay = Math.random() * 0.015 + 0.01;
             }
-            update() {
-                this.vx *= this.friction;
-                this.vy *= this.friction;
-                this.vy += this.gravity;
-                this.x += this.vx;
-                this.y += this.vy;
-                this.alpha -= this.decay;
-            }
-            draw() {
-                fCtx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.alpha})`;
-                // Lego tarzı kare parçacıklar
-                fCtx.fillRect(this.x, this.y, 4, 4);
-            }
+            update() { this.vx *= 0.95; this.vy *= 0.95; this.vy += 0.05; this.x += this.vx; this.y += this.vy; this.alpha -= this.decay; }
+            draw() { fCtx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.alpha})`; fCtx.fillRect(this.x, this.y, 4, 4); }
         }
-
-        let fireworks = [];
-        let particles = [];
-
-        function createParticles(x, y, hue) {
-            for (let i = 0; i < 40; i++) {
-                particles.push(new Particle(x, y, hue));
-            }
-        }
-
+        let fireworks = []; let particles = [];
+        function createParticles(x, y, hue) { for (let i = 0; i < 40; i++) particles.push(new Particle(x, y, hue)); }
         function animateFireworks() {
-            // Hafif iz bırakma efekti için şeffaf siyah boyama
-            fCtx.fillStyle = 'rgba(26, 26, 26, 0.2)';
-            fCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
-
-            if (Math.random() < 0.03) { // Havai fişek sıklığı
-                fireworks.push(new Firework());
-            }
-
-            fireworks.forEach((fw, index) => {
-                fw.update();
-                fw.draw();
-                if (fw.exploded) fireworks.splice(index, 1);
-            });
-
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-                if (p.alpha <= 0) particles.splice(index, 1);
-            });
-
+            fCtx.fillStyle = 'rgba(26, 26, 26, 0.2)'; fCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            if (Math.random() < 0.03) fireworks.push(new Firework());
+            fireworks.forEach((fw, index) => { fw.update(); fw.draw(); if (fw.exploded) fireworks.splice(index, 1); });
+            particles.forEach((p, index) => { p.update(); p.draw(); if (p.alpha <= 0) particles.splice(index, 1); });
             requestAnimationFrame(animateFireworks);
         }
         animateFireworks();
-
     </script>
 </body>
 </html>
-
